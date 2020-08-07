@@ -2,14 +2,6 @@
 
 This is a template repository for when I want to produce a something using Next.js
 
-## PWA
-
-One of the aspects of this template is that it works as a PWA. This will need additional configuration in order for it to represent the app you are building.
-
-The app [App Manifest Generator](https://app-manifest.firebaseapp.com/) is used to generate the content in `/public`, this is done along with [favicon.io](https://favicon.io/favicon-generator/) to generate the logo.
-
-You will also need to change `APP_NAME` and `APP_DESCRIPTION` in `/pages/_document.js` to describe your app
-
 ## Tailwind CSS
 
 This does not need any additional configuration, but this site uses [Tailwind CSS](https://tailwindcss.com/), this makes styling elements simpler.
