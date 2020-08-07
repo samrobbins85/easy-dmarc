@@ -1,5 +1,6 @@
 {
 	"version": 2,
+	"alias": ["dmarc.vercel.app", "dmarc.now.sh"],
 	"github": {
 	    "silent": true
 	}
