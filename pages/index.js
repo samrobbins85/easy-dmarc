@@ -9,8 +9,10 @@ export default function IndexPage() {
 					content="A tool to make adding DMARC to a site easy"
 				/>
 			</Head>
-			<div>
-				<h1>Hello, World </h1>
+			<div className="text-2xl text-center text-blue-600">
+				<a href="https://vercel.com/oauth/authorize?client_id=oac_rWwV143gK1BrtELznk58Ylio">
+					Sign In
+				</a>
 			</div>
 		</>
 	);
