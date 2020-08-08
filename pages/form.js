@@ -1,4 +1,3 @@
-import Select from "react-select";
 import { useState, useEffect } from "react";
 export default function Form() {
 	const [policy, setPolicy] = useState("none");
@@ -32,10 +31,8 @@ export default function Form() {
 		setDmarc(
 			"v=DMARC1; p=" +
 				policy +
-				"; rua=mailto:" +
-				email +
-				"; ruf=mailto:" +
-				email +
+				`${email && "; rua=mailto:" + email}` +
+				`${email && "; ruf=mailto:" + email}` +
 				"; sp=" +
 				subdomainPolicy +
 				"; ri=86400"
@@ -62,8 +59,8 @@ export default function Form() {
 			<h1>Hello</h1>
 			<div className="flex justify-center">
 				<form>
-					<div className="pb-4">
-						Policy:
+					<div class="grid grid-cols-2 gap-3">
+						<p>Policy:</p>
 						<select
 							className="form-select"
 							value={policy}
@@ -73,48 +70,41 @@ export default function Form() {
 							<option value="quarantine">Quarantine</option>
 							<option value="reject">Reject</option>
 						</select>
-					</div>
-					<div
-						className="pb-4"
-						value={subdomainPolicy}
-						onChange={subPolicy}
-					>
-						Policy for Subdomains:
-						<select className="form-select">
+						<p>Policy for Subdomains:</p>
+						<select
+							className="form-select"
+							value={subdomainPolicy}
+							onChange={subPolicy}
+						>
 							<option value="none">None</option>
 							<option value="quarantine">Quarantine</option>
 							<option value="reject">Reject</option>
 						</select>
-					</div>
-					<label className="block">
-						Email:
+						<p>Email:</p>
 						<input
 							type="text"
 							className="form-input"
 							value={email}
 							onChange={changeEmail}
 						/>
-					</label>
-					<label className="block">
-						Servers in the domain that can send email:
+						<p>Servers in the domain that can send email:</p>
 						<textarea
 							type="text"
 							className="form-textarea"
 							value={inDomain}
 							onChange={indomain}
 						/>
-					</label>
-					<label className="block">
-						External domains that may deliver or relay mail:
+						<p>External domains that may deliver or relay mail:</p>
 						<textarea
 							type="text"
 							className="form-textarea"
 							value={outDomain}
 							onChange={outdomain}
 						/>
-					</label>
-					<div className="pb-4">
-						How strict should the servers be treating the emails:
+						<p>
+							How strict should the servers be treating the
+							emails:
+						</p>
 						<select
 							className="form-select"
 							value={strict}
