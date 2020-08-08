@@ -8,25 +8,7 @@ export default function Form() {
 	const [inDomain, setInDomain] = useState("");
 	const [outDomain, setOutDomain] = useState("");
 	const [strict, setStrict] = useState("~all");
-	function changeEmail(event) {
-		setEmail(event.target.value);
-	}
-	function changePolicy(event) {
-		setPolicy(event.target.value);
-	}
 
-	function subPolicy(event) {
-		setSubdomainPolicy(event.target.value);
-	}
-	function indomain(event) {
-		setInDomain(event.target.value);
-	}
-	function outdomain(event) {
-		setOutDomain(event.target.value);
-	}
-	function strictVal(event) {
-		setStrict(event.target.value);
-	}
 	useEffect(() => {
 		setDmarc(
 			"v=DMARC1; p=" +
@@ -37,7 +19,6 @@ export default function Form() {
 				subdomainPolicy +
 				"; ri=86400"
 		);
-		console.log(inDomain.split(/\r?\n/));
 		setSpf(
 			"v=spf1 mx " +
 				inDomain
@@ -64,7 +45,7 @@ export default function Form() {
 						<select
 							className="form-select"
 							value={policy}
-							onChange={changePolicy}
+							onChange={() => setPolicy(event.target.value)}
 						>
 							<option value="none">None</option>
 							<option value="quarantine">Quarantine</option>
@@ -74,7 +55,9 @@ export default function Form() {
 						<select
 							className="form-select"
 							value={subdomainPolicy}
-							onChange={subPolicy}
+							onChange={() =>
+								setSubdomainPolicy(event.target.value)
+							}
 						>
 							<option value="none">None</option>
 							<option value="quarantine">Quarantine</option>
@@ -85,21 +68,21 @@ export default function Form() {
 							type="text"
 							className="form-input"
 							value={email}
-							onChange={changeEmail}
+							onChange={() => setEmail(event.target.value)}
 						/>
 						<p>Servers in the domain that can send email:</p>
 						<textarea
 							type="text"
 							className="form-textarea"
 							value={inDomain}
-							onChange={indomain}
+							onChange={() => setInDomain(event.target.value)}
 						/>
 						<p>External domains that may deliver or relay mail:</p>
 						<textarea
 							type="text"
 							className="form-textarea"
 							value={outDomain}
-							onChange={outdomain}
+							onChange={() => setOutDomain(event.target.value)}
 						/>
 						<p>
 							How strict should the servers be treating the
@@ -108,7 +91,7 @@ export default function Form() {
 						<select
 							className="form-select"
 							value={strict}
-							onChange={strictVal}
+							onChange={() => setStrict(event.target.value)}
 						>
 							<option value="-all">Fail</option>
 							<option value="~all">Soft Fail</option>
