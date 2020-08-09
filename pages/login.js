@@ -353,7 +353,6 @@ export default function Login({ cookies }) {
 export async function getServerSideProps(context) {
 	const data = context.query.code;
 	const cookies = parseCookies(context);
-	console.log("Getting server side props");
 	const rsp = await fetch("https://api.vercel.com/v2/oauth/access_token", {
 		method: "POST",
 		body:
