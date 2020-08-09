@@ -364,7 +364,7 @@ export async function getServerSideProps(context) {
 			"&code=" +
 			encodeURIComponent(data) +
 			"&redirect_uri=" +
-			encodeURIComponent("http://localhost:3000/login"),
+			encodeURIComponent("http://dmarc.vercel.app:3000/login"),
 		headers: {
 			"Content-Type": "application/x-www-form-urlencoded",
 		},
