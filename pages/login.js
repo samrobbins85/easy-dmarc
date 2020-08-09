@@ -363,12 +363,11 @@ export async function getServerSideProps(context) {
 			"&code=" +
 			encodeURIComponent(data) +
 			"&redirect_uri=" +
-			encodeURIComponent("http://dmarc.vercel.app:3000/login"),
+			encodeURIComponent("https://dmarc.vercel.app/login"),
 		headers: {
 			"Content-Type": "application/x-www-form-urlencoded",
 		},
 	});
-
 	const body = await rsp.json();
 	const token = body["access_token"];
 	if (token) {
