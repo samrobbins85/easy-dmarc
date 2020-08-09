@@ -107,7 +107,6 @@ export default function Login({ cookies }) {
 	}, [domain]);
 
 	function handleSubmit() {
-		event.preventDefault();
 		if (hasSPF) {
 			fetch(
 				`https://api.vercel.com/v2/domains/${domain}/records/${hasSPF.id}`,
