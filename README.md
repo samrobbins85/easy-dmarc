@@ -1,21 +1,33 @@
-# nextjs-template
+# Easy DMARC
+![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/samrobbins85/easy-dmarc?style=for-the-badge)
 
-This is a template repository for when I want to produce a something using Next.js
+## About
+This application sets up DMARC on your Vercel domains, and in the process also sets up SPF. In combination, these secure your domain by protecting you from fraud as it is much more difficult for people to send emails pretending to be your domain.
 
-## Tailwind CSS
+## How it works
+You log in to Vercel, and it uses the token generated from this to list your domains. You select a domain and fill out the form to specify the options you want and click submit and then two generated DNS records will be added to your domain on Vercel, these are all that is needed for DMARC and SPF.
 
-This does not need any additional configuration, but this site uses [Tailwind CSS](https://tailwindcss.com/), this makes styling elements simpler.
 
-Additional styles can be configured in `/styles/index.css` and Tailwind Plugins can be installed in `tailwind.config.js`
+## Tech Stack Used
+Next.js, React, Vercel API, Tailwind CSS, Vercel Hosting
 
-## Code formatting
+## How to use it
+This application is hosted at dmarc.vercel.app
 
-Again this doesn't need any additional configuration, but can be configured if you wish, for code formatting and linting I have
+For local development first clone the repository using
+```shell
+git clone https://github.com/samrobbins85/easy-dmarc.git
+```
 
--   `.eslintrc.js`
--   `.prettierrc.json`
+Then move into the directory and run
+```shell
+npm install
+```
+to install it, then
+```shell
+npm run dev
+```
+to start the dev server. The application can then be found at localhost:3000
 
-These configure ESLint and Prettier respectively, ensure that whatever configuration you choose doesn't cause conflicts, such as using tabs in ESLint and spaces in prettier.
-
-## Vercel Hosting
-This site will use hosting from Vercel. This can be configured in `vercel.json` a notable key to change is `alias`, this will allow for setting a custom domain
+## License
+This project is licensed under MIT
