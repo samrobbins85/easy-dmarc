@@ -1,4 +1,4 @@
-import { parseCookies, setCookie, destroyCookie } from "nookies";
+import { parseCookies, setCookie } from "nookies";
 import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
 import Head from "next/head";
