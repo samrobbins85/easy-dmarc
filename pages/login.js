@@ -1,6 +1,7 @@
 import { parseCookies, setCookie, destroyCookie } from "nookies";
 import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
+import Head from "next/head";
 
 export default function Login({ cookies }) {
 	const [error, setError] = useState(null);
@@ -15,6 +16,9 @@ export default function Login({ cookies }) {
 	const [inDomain, setInDomain] = useState("");
 	const [outDomain, setOutDomain] = useState("");
 	const [strict, setStrict] = useState("~all");
+	const [hasSPF, setHasSPF] = useState(false);
+	const [hasDMARC, setHasDMARC] = useState(false);
+	const [wantEdit, setWantEdit] = useState(false);
 
 	useEffect(() => {
 		setDmarc(
@@ -63,8 +67,69 @@ export default function Login({ cookies }) {
 			);
 	}, []);
 
+	useEffect(() => {
+		setWantEdit(false);
+		if (domain !== "") {
+			fetch(
+				`https://api.vercel.com/v2/domains/${domain}/records?since=0`,
+				{
+					headers: {
+						Authorization: "Bearer " + Cookies.get("token"),
+					},
+				}
+			)
+				.then((res) => res.json())
+				.then((result) => {
+					console.log(
+						result.records.find(
+							(element) =>
+								element.type === "TXT" &&
+								element.value.startsWith("v=spf")
+						)
+					);
+					setHasSPF(
+						result.records.find(
+							(element) =>
+								element.type === "TXT" &&
+								element.value.startsWith("v=spf")
+						)
+					),
+						setHasDMARC(
+							result.records.find(
+								(element) =>
+									element.type === "TXT" &&
+									element.value.startsWith("v=DMARC") &&
+									element.name === "_dmarc"
+							)
+						);
+				});
+		}
+	}, [domain]);
+
 	function handleSubmit() {
 		event.preventDefault();
+		if (hasSPF) {
+			fetch(
+				`https://api.vercel.com/v2/domains/${domain}/records/${hasSPF.id}`,
+				{
+					method: "DELETE",
+					headers: {
+						Authorization: "Bearer " + Cookies.get("token"),
+					},
+				}
+			);
+		}
+		if (hasDMARC) {
+			fetch(
+				`https://api.vercel.com/v2/domains/${domain}/records/${hasDMARC.id}`,
+				{
+					method: "DELETE",
+					headers: {
+						Authorization: "Bearer " + Cookies.get("token"),
+					},
+				}
+			);
+		}
 
 		console.log("SUBMIT");
 		fetch(`https://api.vercel.com/v2/domains/${domain}/records`, {
@@ -91,89 +156,196 @@ export default function Login({ cookies }) {
 
 	return (
 		<>
+			<Head>
+				<title>Easy DMARC | Set Up</title>
+				<meta
+					name="Description"
+					content="A tool to make adding DMARC to a site easy"
+				/>
+			</Head>
+			<h1 className="text-5xl font-semibold text-center pt-6">
+				Set up DMARC
+			</h1>
 			<div className="flex justify-center pt-6">
-				<form onSubmit={handleSubmit}>
-					<div className="grid grid-cols-2 gap-3">
-						<p>Domain:</p>
+				<br />
+				<div>
+					<div className="grid grid-cols-2 gap-3 pb-6">
+						Domain:
 						<select
 							className="form-select"
 							value={domain}
 							onChange={() => setDomain(event.target.value)}
 						>
+							<option disabled value={""}>
+								Select an option
+							</option>
 							{!error &&
 								isLoaded &&
 								items.map((item) => (
-									<option value={item}>{item}</option>
+									<option key={item} value={item}>
+										{item}
+									</option>
 								))}
 						</select>
-						<p>Policy:</p>
-						<select
-							className="form-select"
-							value={policy}
-							onChange={() => setPolicy(event.target.value)}
-						>
-							<option value="none">None</option>
-							<option value="quarantine">Quarantine</option>
-							<option value="reject">Reject</option>
-						</select>
-						<p>Policy for Subdomains:</p>
-						<select
-							className="form-select"
-							value={subdomainPolicy}
-							onChange={() =>
-								setSubdomainPolicy(event.target.value)
-							}
-						>
-							<option value="none">None</option>
-							<option value="quarantine">Quarantine</option>
-							<option value="reject">Reject</option>
-						</select>
-						<p>Email:</p>
-						<input
-							type="text"
-							className="form-input"
-							value={email}
-							onChange={() => setEmail(event.target.value)}
-						/>
-						<p>Servers in the domain that can send email:</p>
-						<textarea
-							type="text"
-							className="form-textarea"
-							value={inDomain}
-							onChange={() => setInDomain(event.target.value)}
-						/>
-						<p>External domains that may deliver or relay mail:</p>
-						<textarea
-							type="text"
-							className="form-textarea"
-							value={outDomain}
-							onChange={() => setOutDomain(event.target.value)}
-						/>
-						<p>
-							How strict should the servers be treating the
-							emails:
-						</p>
-						<select
-							className="form-select"
-							value={strict}
-							onChange={() => setStrict(event.target.value)}
-						>
-							<option value="-all">Fail</option>
-							<option value="~all">Soft Fail</option>
-							<option value="?all">Neutral</option>
-							<option value="+all">Allow all</option>
-						</select>
 					</div>
-					<div className="flex justify-center pt-6">
-						<input
-							type="submit"
-							value="Submit"
-							className="p-4 border border-gray-700 bg-gray-300 rounded hover:bg-gray-500 cursor-pointer"
-						/>
-					</div>
-				</form>
+					{domain !== "" && (
+						<>
+							<div className="flex justify-center py-4">
+								<p className="px-6">
+									DMARC
+									{hasDMARC ? (
+										<img
+											className="inline-block"
+											src="./available.svg"
+										/>
+									) : (
+										<img
+											className="inline-block"
+											src="./not_available.svg"
+										/>
+									)}
+								</p>
+
+								<p className="px-6">
+									SPF
+									{hasSPF ? (
+										<img
+											className="inline-block"
+											src="./available.svg"
+										/>
+									) : (
+										<img
+											className="inline-block"
+											src="./not_available.svg"
+										/>
+									)}
+								</p>
+							</div>
+							{hasSPF && hasDMARC && !wantEdit && (
+								<>
+									<p className="text-center text-xl py-6">
+										You're already set up with both SPF and
+										DMARC, click below if you want to edit
+										the records
+									</p>
+									<div className="flex justify-center">
+										<button
+											onClick={() => setWantEdit(true)}
+											className="p-2 px-4 transition duration-300 bg-black text-white rounded hover:bg-white hover:text-black border hover:border-black cursor-pointer"
+										>
+											Edit
+										</button>
+									</div>
+								</>
+							)}
+							{(hasSPF === undefined ||
+								hasDMARC == undefined ||
+								wantEdit) && (
+								<form onSubmit={handleSubmit}>
+									<div className="grid grid-cols-2 gap-3">
+										<p>Policy:</p>
+										<select
+											className="form-select"
+											value={policy}
+											onChange={() =>
+												setPolicy(event.target.value)
+											}
+										>
+											<option value="none">None</option>
+											<option value="quarantine">
+												Quarantine
+											</option>
+											<option value="reject">
+												Reject
+											</option>
+										</select>
+										<p>Policy for Subdomains:</p>
+										<select
+											className="form-select"
+											value={subdomainPolicy}
+											onChange={() =>
+												setSubdomainPolicy(
+													event.target.value
+												)
+											}
+										>
+											<option value="none">None</option>
+											<option value="quarantine">
+												Quarantine
+											</option>
+											<option value="reject">
+												Reject
+											</option>
+										</select>
+										<p>Email:</p>
+										<input
+											type="text"
+											className="form-input"
+											value={email}
+											onChange={() =>
+												setEmail(event.target.value)
+											}
+										/>
+										<p>
+											Servers in the domain that can send
+											email:
+										</p>
+										<textarea
+											type="text"
+											className="form-textarea"
+											value={inDomain}
+											onChange={() =>
+												setInDomain(event.target.value)
+											}
+										/>
+										<p>
+											External domains that may deliver or
+											relay mail:
+										</p>
+										<textarea
+											type="text"
+											className="form-textarea"
+											value={outDomain}
+											onChange={() =>
+												setOutDomain(event.target.value)
+											}
+										/>
+										<p>
+											How strict should the servers be
+											treating the emails:
+										</p>
+										<select
+											className="form-select"
+											value={strict}
+											onChange={() =>
+												setStrict(event.target.value)
+											}
+										>
+											<option value="-all">Fail</option>
+											<option value="~all">
+												Soft Fail
+											</option>
+											<option value="?all">
+												Neutral
+											</option>
+											<option value="+all">
+												Allow all
+											</option>
+										</select>
+									</div>
+									<div className="flex justify-center pt-6">
+										<input
+											type="submit"
+											value="Submit"
+											className="p-2 px-4 transition duration-300 bg-black text-white rounded hover:bg-white hover:text-black border hover:border-black cursor-pointer"
+										/>
+									</div>
+								</form>
+							)}
+						</>
+					)}
+				</div>
 			</div>
-			{spf}
 		</>
 	);
 }

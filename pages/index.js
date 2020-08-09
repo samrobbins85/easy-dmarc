@@ -10,11 +10,11 @@ export default function IndexPage() {
 				/>
 			</Head>
 			<div className="flex justify-center pt-6">
-				<div className="grid">
-					<h1 className="text-5xl font-semibold pb-12 text-center">
+				<div className="grid text-center">
+					<h1 className="text-5xl font-semibold pb-12 ">
 						Easy DMARC
 					</h1>
-					<p className="text-lg pb-12  px-6 text-center">
+					<p className="text-lg pb-12 px-6 text-gray-700">
 						Easily add DMARC to any of your domains hosted on Vercel
 					</p>
 					<div className="flex justify-center">
