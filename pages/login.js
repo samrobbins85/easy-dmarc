@@ -353,7 +353,7 @@ export default function Login({ cookies }) {
 export async function getServerSideProps(context) {
 	const data = context.query.code;
 	const cookies = parseCookies(context);
-
+	console.log("Getting server side props");
 	const rsp = await fetch("https://api.vercel.com/v2/oauth/access_token", {
 		method: "POST",
 		body:
@@ -372,7 +372,6 @@ export async function getServerSideProps(context) {
 
 	const body = await rsp.json();
 	const token = body["access_token"];
-	console.log(process.env.ID);
 	if (token) {
 		setCookie(context, "token", token, {
 			maxAge: 60 * 60 * 24,
