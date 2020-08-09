@@ -80,13 +80,6 @@ export default function Login({ cookies }) {
 			)
 				.then((res) => res.json())
 				.then((result) => {
-					console.log(
-						result.records.find(
-							(element) =>
-								element.type === "TXT" &&
-								element.value.startsWith("v=spf")
-						)
-					);
 					setHasSPF(
 						result.records.find(
 							(element) =>
@@ -130,7 +123,6 @@ export default function Login({ cookies }) {
 			);
 		}
 
-		console.log("SUBMIT");
 		fetch(`https://api.vercel.com/v2/domains/${domain}/records`, {
 			method: "POST",
 			body: `{"name":"","type":"TXT","value":"${spf}"}`,
@@ -138,9 +130,7 @@ export default function Login({ cookies }) {
 				"Content-Type": "application/json",
 				Authorization: "Bearer " + Cookies.get("token"),
 			},
-		})
-			.then((res) => res.json())
-			.then((result) => console.log(result));
+		});
 
 		fetch(`https://api.vercel.com/v2/domains/${domain}/records`, {
 			method: "POST",
