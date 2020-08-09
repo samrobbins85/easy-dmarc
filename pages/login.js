@@ -62,11 +62,38 @@ export default function Login({ cookies }) {
 				}
 			);
 	}, []);
+
+	function handleSubmit() {
+		event.preventDefault();
+
+		console.log("SUBMIT");
+		fetch(`https://api.vercel.com/v2/domains/${domain}/records`, {
+			method: "POST",
+			body: `{"name":"","type":"TXT","value":"${spf}"}`,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + Cookies.get("token"),
+			},
+		})
+			.then((res) => res.json())
+			.then((result) => console.log(result));
+
+		fetch(`https://api.vercel.com/v2/domains/${domain}/records`, {
+			method: "POST",
+			body: `{"name":"_dmarc","type":"TXT","value":"${dmarc}"}`,
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + Cookies.get("token"),
+			},
+		});
+		return true;
+	}
+
 	return (
 		<>
 			<div className="flex justify-center pt-6">
-				<form>
-					<div class="grid grid-cols-2 gap-3">
+				<form onSubmit={handleSubmit}>
+					<div className="grid grid-cols-2 gap-3">
 						<p>Domain:</p>
 						<select
 							className="form-select"
@@ -137,10 +164,16 @@ export default function Login({ cookies }) {
 							<option value="+all">Allow all</option>
 						</select>
 					</div>
+					<div className="flex justify-center pt-6">
+						<input
+							type="submit"
+							value="Submit"
+							className="p-4 border border-gray-700 bg-gray-300 rounded hover:bg-gray-500 cursor-pointer"
+						/>
+					</div>
 				</form>
 			</div>
-			<p>Dmarc{dmarc}</p>
-			<p>SPF:{spf}</p>
+			{spf}
 		</>
 	);
 }
