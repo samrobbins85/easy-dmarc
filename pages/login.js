@@ -372,6 +372,7 @@ export async function getServerSideProps(context) {
 
 	const body = await rsp.json();
 	const token = body["access_token"];
+	console.log(token);
 	if (token) {
 		setCookie(context, "token", token, {
 			maxAge: 60 * 60 * 24,
