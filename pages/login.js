@@ -361,6 +361,7 @@ export async function getServerSideProps(context) {
 	const token = body["access_token"];
 	if (token) {
 		setCookie(context, "token", token, {
+			secure: true,
 			maxAge: 60 * 60 * 24,
 			path: "/",
 		});
