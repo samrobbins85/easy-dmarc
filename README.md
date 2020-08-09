@@ -4,7 +4,7 @@
 ## About
 This application sets up DMARC on your Vercel domains, and in the process also sets up SPF. In combination, these secure your domain by protecting you from fraud as it is much more difficult for people to send emails pretending to be your domain.
 
-The impact of this for domain owners is that people won't regard emails from them as spam if criminals are sending fradulent emails pretending to be them. Alongisde this, it ensures better delivery to other people as they can verify that the email is coming from the sender. For the wider public it reduces the amount of spam and cybercrime as there are fewer domains from which criminals can send emails from.
+The impact of this for domain owners is that people won't regard emails from them as spam if criminals are sending fraudulent emails pretending to be them. Alongisde this, it ensures better delivery to other people as they can verify that the email is coming from the sender. For the wider public it reduces the amount of spam and cybercrime as there are fewer domains from which criminals can send emails.
 
 ## How it works
 You log in to Vercel, and it uses the token generated from this to list your domains. You select a domain and fill out the form to specify the options you want and click submit and then two generated DNS records will be added to your domain on Vercel, these are all that is needed for DMARC and SPF.
