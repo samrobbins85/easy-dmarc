@@ -177,6 +177,17 @@ export default function Login({ cookies }) {
 								))}
 						</select>
 					</div>
+					<ul>
+						{!error &&
+							isLoaded &&
+							items.map((item) => (
+								<li key={item} value={item}>
+									{item}
+								</li>
+							))}
+					</ul>
+
+
 					{domain !== "" && (
 						<>
 							<div className="flex justify-center py-4">
@@ -352,7 +363,7 @@ export async function getServerSideProps(context) {
 			"&code=" +
 			encodeURIComponent(data) +
 			"&redirect_uri=" +
-			encodeURIComponent("https://dmarc.vercel.app/login"),
+			encodeURIComponent(process.env.REDIRECT),
 		headers: {
 			"Content-Type": "application/x-www-form-urlencoded",
 		},
