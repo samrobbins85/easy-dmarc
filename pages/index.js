@@ -20,7 +20,7 @@ export default function IndexPage() {
 					<div className="flex justify-center">
 						<a
 							className="bg-black p-4 text-white font-semibold rounded flex"
-							href="https://vercel.com/oauth/authorize?client_id=oac_rWwV143gK1BrtELznk58Ylio"
+							href={`https://vercel.com/oauth/authorize?client_id=${process.env.ID}`}
 						>
 							<svg
 								className="h-6"
