@@ -2,7 +2,7 @@ import { parseCookies, setCookie } from "nookies";
 import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
 import Head from "next/head";
-
+import DetectSPF from "../components/spfCheck";
 export default function Login({ cookies }) {
 	const [error, setError] = useState(null);
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -177,16 +177,17 @@ export default function Login({ cookies }) {
 								))}
 						</select>
 					</div>
-					<ul>
+					{/* List of domains on your account */}
+					<div className="grid divide-y-2 divide-gray-300">
 						{!error &&
 							isLoaded &&
 							items.map((item) => (
-								<li key={item} value={item}>
-									{item}
-								</li>
+								<>
+									<div className="py-3">{item}</div>
+									<DetectSPF domain={item} />
+								</>
 							))}
-					</ul>
-
+					</div>
 
 					{domain !== "" && (
 						<>
