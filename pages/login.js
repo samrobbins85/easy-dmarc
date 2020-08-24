@@ -157,7 +157,7 @@ export default function Login({ cookies }) {
 			</h1>
 			<div className="flex justify-center pt-6">
 				<br />
-				<div>
+				<div className="container">
 					<div className="grid grid-cols-2 gap-3 pb-6">
 						Domain:
 						<select
@@ -178,21 +178,30 @@ export default function Login({ cookies }) {
 						</select>
 					</div>
 					{/* List of domains on your account */}
-					<div className="grid divide-y-2 divide-gray-300">
+					<div className="divide-y-2 divide-gray-300">
 						{!error &&
 							isLoaded &&
 							items.map((item) => (
-								<>
-									<div className="py-3">{item}</div>
+								<div
+									className="grid grid-cols-8 py-2 divide-x-2 divide-gray-200"
+									key={item}
+								>
+									<div className="col-span-3">{item}</div>
 									<DetectSPF domain={item} />
-								</>
+									<div className="flex justify-center">
+										<img
+											className="h-6 inline-block col-span-1"
+											src="icons8-edit.svg"
+										/>
+									</div>
+								</div>
 							))}
 					</div>
 
 					{domain !== "" && (
 						<>
 							<div className="flex justify-center py-4">
-								<p className="px-6">
+								<p className="px-2">
 									DMARC
 									{hasDMARC ? (
 										<img
