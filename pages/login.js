@@ -155,7 +155,7 @@ export default function Login({ cookies }) {
 			<h1 className="text-5xl font-semibold text-center pt-6">
 				Set up DMARC
 			</h1>
-			<div className="flex justify-center pt-6">
+			<div className="flex justify-center p-6">
 				<br />
 				<div className="container">
 					{/* `					<div className="grid grid-cols-2 gap-3 pb-6">
@@ -186,7 +186,9 @@ export default function Login({ cookies }) {
 									className="grid grid-cols-8 py-2 divide-x-2 divide-gray-200"
 									key={item}
 								>
-									<div className="col-span-3">{item}</div>
+									<p className="col-span-3 break-words">
+										{item}
+									</p>
 									<DetectSPF domain={item} />
 									<button
 										className="flex justify-center"

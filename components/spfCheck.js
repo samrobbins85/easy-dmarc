@@ -39,7 +39,7 @@ export default function DetectSPF(props) {
 	// }
 	return (
 		<div className="flex justify-around col-span-4">
-			<span className="px-4">
+			<span>
 				SPF:{" "}
 				{spf === undefined ? (
 					<img className="h-6 inline-block" src="not_available.svg" />
