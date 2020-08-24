@@ -2,7 +2,7 @@ import { parseCookies, setCookie } from "nookies";
 import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
 import Head from "next/head";
-
+import DetectSPF from "../components/spfCheck";
 export default function Login({ cookies }) {
 	const [error, setError] = useState(null);
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -157,8 +157,8 @@ export default function Login({ cookies }) {
 			</h1>
 			<div className="flex justify-center pt-6">
 				<br />
-				<div>
-					<div className="grid grid-cols-2 gap-3 pb-6">
+				<div className="container">
+					{/* `					<div className="grid grid-cols-2 gap-3 pb-6">
 						Domain:
 						<select
 							className="form-select"
@@ -176,22 +176,35 @@ export default function Login({ cookies }) {
 									</option>
 								))}
 						</select>
-					</div>
-					<ul>
+					</div>` */}
+					{/* List of domains on your account */}
+					<div className="divide-y-2 divide-gray-300 pb-12">
 						{!error &&
 							isLoaded &&
 							items.map((item) => (
-								<li key={item} value={item}>
-									{item}
-								</li>
+								<div
+									className="grid grid-cols-8 py-2 divide-x-2 divide-gray-200"
+									key={item}
+								>
+									<div className="col-span-3">{item}</div>
+									<DetectSPF domain={item} />
+									<button
+										className="flex justify-center"
+										onClick={() => setDomain(item)}
+									>
+										<img
+											className="h-6 inline-block col-span-1"
+											src="icons8-edit.svg"
+										/>
+									</button>
+								</div>
 							))}
-					</ul>
-
+					</div>
 
 					{domain !== "" && (
 						<>
-							<div className="flex justify-center py-4">
-								<p className="px-6">
+							{/* <div className="flex justify-center py-4">
+								<p className="px-2">
 									DMARC
 									{hasDMARC ? (
 										<img
@@ -220,7 +233,13 @@ export default function Login({ cookies }) {
 										/>
 									)}
 								</p>
-							</div>
+							</div> */}
+							<h2 className="text-center text-xl py-8">
+								<span>Configuring Domain:</span>{" "}
+								<span className="font-semibold text-2xl">
+									{domain}
+								</span>
+							</h2>
 							{hasSPF && hasDMARC && !wantEdit && (
 								<>
 									<p className="text-center text-xl py-6">
