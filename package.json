@@ -11,7 +11,7 @@
 		"next": "^9.5.4",
 		"nookies": "^2.4.0",
 		"react": "^16.14.0",
-		"react-dom": "^16.12.0"
+		"react-dom": "^16.14.0"
 	},
 	"devDependencies": {
 		"@tailwindcss/custom-forms": "^0.2.1",
