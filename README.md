@@ -1,5 +1,4 @@
 # Easy DMARC
-![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/samrobbins85/easy-dmarc?style=for-the-badge)
 
 ## About
 This application sets up DMARC on your Vercel domains, and in the process also sets up SPF. In combination, these secure your domain by protecting you from fraud as it is much more difficult for people to send emails pretending to be your domain.
