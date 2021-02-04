@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
+import CheckIcon from "./checkicon";
+import CrossIcon from "./crossicon";
 
 export default function DetectSPF(props) {
 	const [spf, setSPF] = useState("Loading");
@@ -32,29 +34,26 @@ export default function DetectSPF(props) {
 				);
 			});
 	}
-	// if (spf !== undefined) {
-	// 	return <h1>Has SPF</h1>;
-	// } else {
-	// 	return <h2>Doesn't have SPF</h2>;
-	// }
 	return (
-		<div className="flex justify-around col-span-4">
-			<span>
-				SPF:{" "}
-				{spf === undefined ? (
-					<img className="h-6 inline-block" src="not_available.svg" />
-				) : (
-					<img className="h-6 inline-block" src="available.svg" />
-				)}
-			</span>
-			<span>
-				DMARC:
-				{dmarc === undefined ? (
-					<img className="h-6 inline-block" src="not_available.svg" />
-				) : (
-					<img className="h-6 inline-block" src="available.svg" />
-				)}
-			</span>
-		</div>
+		<>
+			<td className="border border-gray-200 px-4">
+				<div className="flex">
+					{spf === undefined ? (
+						<CrossIcon className="h-8 w-8 mx-auto text-red-600" />
+					) : (
+						<CheckIcon className="h-8 w-8 mx-auto text-green-600" />
+					)}
+				</div>
+			</td>
+			<td className="border border-gray-200 px-4">
+				<div className="flex">
+					{dmarc === undefined ? (
+						<CrossIcon className="h-8 w-8 mx-auto text-red-600" />
+					) : (
+						<CheckIcon className="h-8 w-8 mx-auto text-green-600" />
+					)}
+				</div>
+			</td>
+		</>
 	);
 }

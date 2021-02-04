@@ -3,6 +3,8 @@ import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import DetectSPF from "../components/spfCheck";
+import EditIcon from "../components/edit";
+
 export default function Login({ cookies }) {
 	const [error, setError] = useState(null);
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -158,84 +160,42 @@ export default function Login({ cookies }) {
 			<div className="flex justify-center p-6">
 				<br />
 				<div className="container">
-					{/* `					<div className="grid grid-cols-2 gap-3 pb-6">
-						Domain:
-						<select
-							className="form-select"
-							value={domain}
-							onChange={() => setDomain(event.target.value)}
-						>
-							<option disabled value={""}>
-								Select an option
-							</option>
+					<table className="table-auto mx-auto">
+						<thead>
+							<tr>
+								<th>Domain</th>
+								<th>SPF</th>
+								<th>DMARC</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
 							{!error &&
 								isLoaded &&
 								items.map((item) => (
-									<option key={item} value={item}>
-										{item}
-									</option>
-								))}
-						</select>
-					</div>` */}
-					{/* List of domains on your account */}
-					<div className="divide-y-2 divide-gray-300 pb-12">
-						{!error &&
-							isLoaded &&
-							items.map((item) => (
-								<div
-									className="grid grid-cols-8 py-2 divide-x-2 divide-gray-200"
-									key={item}
-								>
-									<p className="col-span-3 break-words">
-										{item}
-									</p>
-									<DetectSPF domain={item} />
-									<button
-										className="flex justify-center"
-										onClick={() => setDomain(item)}
+									<tr
+										className="border border-gray-200"
+										key={item}
 									>
-										<img
-											className="h-6 inline-block col-span-1"
-											src="icons8-edit.svg"
-										/>
-									</button>
-								</div>
-							))}
-					</div>
+										<td className="border border-gray-200 px-4">
+											{item}
+										</td>
+										<DetectSPF domain={item} />
+										<td className="border border-gray-200 px-4">
+											<button
+												className="flex justify-center"
+												onClick={() => setDomain(item)}
+											>
+												<EditIcon className="w-6 h-6 text-gray-700" />
+											</button>
+										</td>
+									</tr>
+								))}
+						</tbody>
+					</table>
 
 					{domain !== "" && (
 						<>
-							{/* <div className="flex justify-center py-4">
-								<p className="px-2">
-									DMARC
-									{hasDMARC ? (
-										<img
-											className="inline-block"
-											src="./available.svg"
-										/>
-									) : (
-										<img
-											className="inline-block"
-											src="./not_available.svg"
-										/>
-									)}
-								</p>
-
-								<p className="px-6">
-									SPF
-									{hasSPF ? (
-										<img
-											className="inline-block"
-											src="./available.svg"
-										/>
-									) : (
-										<img
-											className="inline-block"
-											src="./not_available.svg"
-										/>
-									)}
-								</p>
-							</div> */}
 							<h2 className="text-center text-xl py-8">
 								<span>Configuring Domain:</span>{" "}
 								<span className="font-semibold text-2xl">
@@ -268,7 +228,7 @@ export default function Login({ cookies }) {
 										<select
 											className="form-select"
 											value={policy}
-											onChange={() =>
+											onChange={(event) =>
 												setPolicy(event.target.value)
 											}
 										>
@@ -284,7 +244,7 @@ export default function Login({ cookies }) {
 										<select
 											className="form-select"
 											value={subdomainPolicy}
-											onChange={() =>
+											onChange={(event) =>
 												setSubdomainPolicy(
 													event.target.value
 												)
@@ -303,7 +263,7 @@ export default function Login({ cookies }) {
 											type="text"
 											className="form-input"
 											value={email}
-											onChange={() =>
+											onChange={(event) =>
 												setEmail(event.target.value)
 											}
 										/>
@@ -315,7 +275,7 @@ export default function Login({ cookies }) {
 											type="text"
 											className="form-textarea"
 											value={inDomain}
-											onChange={() =>
+											onChange={(event) =>
 												setInDomain(event.target.value)
 											}
 										/>
@@ -327,7 +287,7 @@ export default function Login({ cookies }) {
 											type="text"
 											className="form-textarea"
 											value={outDomain}
-											onChange={() =>
+											onChange={(event) =>
 												setOutDomain(event.target.value)
 											}
 										/>
@@ -338,7 +298,7 @@ export default function Login({ cookies }) {
 										<select
 											className="form-select"
 											value={strict}
-											onChange={() =>
+											onChange={(event) =>
 												setStrict(event.target.value)
 											}
 										>
