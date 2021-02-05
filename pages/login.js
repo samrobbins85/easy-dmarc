@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import DetectSPF from "../components/spfCheck";
 import EditIcon from "../components/edit";
+import Modal from "../components/modal";
 
 export default function Login({ cookies }) {
+	const [modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [items, setItems] = useState([]);
@@ -154,6 +156,7 @@ export default function Login({ cookies }) {
 					content="A tool to make adding DMARC to a site easy"
 				/>
 			</Head>
+			{modal && <Modal setModal={setModal} />}
 			<h1 className="text-5xl font-semibold text-center pt-6">
 				Set up DMARC
 			</h1>
@@ -184,7 +187,7 @@ export default function Login({ cookies }) {
 										<td className="border border-gray-200 px-4">
 											<button
 												className="flex justify-center"
-												onClick={() => setDomain(item)}
+												onClick={() => setModal(true)}
 											>
 												<EditIcon className="w-6 h-6 text-gray-700" />
 											</button>
