@@ -160,7 +160,30 @@ export default function Login({ cookies }) {
 			<h1 className="text-5xl font-semibold text-center pt-6">
 				Set up DMARC
 			</h1>
-			<div className="flex justify-center p-6">
+			<div className="grid grid-cols-4 px-4 mt-10">
+				<div className="grid grid-cols-1 gap-y-4 px-8 pb-2 overflow-auto">
+					{!error &&
+						isLoaded &&
+						items.map((item) => (
+							<button
+								className={`border p-2 focus:outline-none grid grid-cols-1 text-left ${
+									domain === item && "shadow-lg bg-gray-100"
+								}`}
+								onClick={() => setDomain(item)}
+							>
+								<span className="text-2xl font-semibold">
+									{item}
+								</span>
+								<span>DMARC</span>
+								<span>SPF</span>
+							</button>
+						))}
+				</div>
+				<div className="col-span-3">
+					<h2 className="text-center text-3xl">{domain}</h2>
+				</div>
+			</div>
+			{/* <div className="flex justify-center p-6">
 				<br />
 				<div className="container">
 					<table className="table-auto mx-auto">
@@ -328,8 +351,8 @@ export default function Login({ cookies }) {
 							)}
 						</>
 					)}
-				</div>
-			</div>
+				</div> */}
+			{/* </div> */}
 		</>
 	);
 }
