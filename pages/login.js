@@ -156,31 +156,37 @@ export default function Login({ cookies }) {
 					content="A tool to make adding DMARC to a site easy"
 				/>
 			</Head>
-			{modal && <Modal setModal={setModal} />}
-			<h1 className="text-5xl font-semibold text-center pt-6">
-				Set up DMARC
-			</h1>
-			<div className="grid grid-cols-4 px-4 mt-10">
-				<div className="grid grid-cols-1 gap-y-4 px-8 pb-2 overflow-auto">
-					{!error &&
-						isLoaded &&
-						items.map((item) => (
-							<button
-								className={`border p-2 focus:outline-none grid grid-cols-1 text-left ${
-									domain === item && "shadow-lg bg-gray-100"
-								}`}
-								onClick={() => setDomain(item)}
-							>
-								<span className="text-2xl font-semibold">
-									{item}
-								</span>
-								<span>DMARC</span>
-								<span>SPF</span>
-							</button>
-						))}
-				</div>
-				<div className="col-span-3">
-					<h2 className="text-center text-3xl">{domain}</h2>
+			<div className="vh-10 grid">
+				<h1 className="text-5xl text-center self-center">
+					DMARC Settings
+				</h1>
+			</div>
+			<div className="flex vh-90">
+				<div className="flex w-full">
+					<div className="grid grid-cols-4 px-4 mt-10 w-full">
+						<div className="grid grid-cols-1 gap-y-4 px-8 pb-4 overflow-auto">
+							{!error &&
+								isLoaded &&
+								items.map((item) => (
+									<button
+										className={`border p-2 py-12 focus:outline-none grid grid-cols-1 text-left ${
+											domain === item &&
+											"shadow-lg bg-gray-100"
+										}`}
+										onClick={() => setDomain(item)}
+									>
+										<span className="text-2xl font-semibold">
+											{item}
+										</span>
+										<span>DMARC</span>
+										<span>SPF</span>
+									</button>
+								))}
+						</div>
+						<div className="col-span-3">
+							<h2 className="text-center text-3xl">{domain}</h2>
+						</div>
+					</div>
 				</div>
 			</div>
 			{/* <div className="flex justify-center p-6">
