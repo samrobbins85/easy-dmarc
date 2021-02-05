@@ -5,7 +5,7 @@ import Head from "next/head";
 import DetectSPF from "../components/spfCheck";
 import EditIcon from "../components/edit";
 import Modal from "../components/modal";
-
+import { loremIpsum } from "lorem-ipsum";
 export default function Login({ cookies }) {
 	const [modal, setModal] = useState(false);
 	const [error, setError] = useState(null);
@@ -164,12 +164,12 @@ export default function Login({ cookies }) {
 			<div className="flex vh-90">
 				<div className="flex w-full">
 					<div className="grid grid-cols-4 px-4 mt-10 w-full">
-						<div className="grid grid-cols-1 gap-y-4 px-8 pb-4 overflow-auto">
+						<div className="grid grid-cols-1 gap-y-4 px-8 pb-4 auto-rows-min overflow-auto">
 							{!error &&
 								isLoaded &&
 								items.map((item) => (
 									<button
-										className={`border p-2 py-12 focus:outline-none grid grid-cols-1 text-left ${
+										className={`border p-2 py-6 focus:outline-none grid grid-cols-1 max-h-32 text-left ${
 											domain === item &&
 											"shadow-lg bg-gray-100"
 										}`}
@@ -185,6 +185,11 @@ export default function Login({ cookies }) {
 						</div>
 						<div className="col-span-3">
 							<h2 className="text-center text-3xl">{domain}</h2>
+							{loremIpsum({
+								count: 200,
+								paragraphLowerBound: 40,
+								paragraphUpperBound: 40,
+							})}
 						</div>
 					</div>
 				</div>
