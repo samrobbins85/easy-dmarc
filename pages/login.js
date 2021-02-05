@@ -161,12 +161,13 @@ export default function Login({ cookies }) {
 					DMARC Settings
 				</h1>
 			</div> */}
-			<div className="fixed flex z-20 border-b bg-white w-full text-xl h-14 items-center pl-4">
+			<div className="fixed flex z-20 border-b bg-white w-full text-xl vh-5 items-center pl-4">
 				Easy DMARC
 			</div>
 			<div className="flex">
-				<div class="h-screen  top-0 sticky p-4 overflow-auto w-1/4">
-					<div className="grid grid-cols-1 gap-y-4 px-8 pb-4 pt-20 auto-rows-min overflow-auto">
+				<div class="h-screen  top-0 sticky  w-1/3">
+					<div className="vh-5"></div>
+					<div className="grid grid-cols-1 gap-y-4 px-8 pb-4 pt-2 auto-rows-min overflow-auto vh-95">
 						{!error &&
 							isLoaded &&
 							items.map((item) => (
