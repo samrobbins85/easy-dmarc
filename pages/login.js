@@ -156,13 +156,48 @@ export default function Login({ cookies }) {
 					content="A tool to make adding DMARC to a site easy"
 				/>
 			</Head>
-			<div className="vh-10 grid">
+			{/* <div className="vh-10 grid">
 				<h1 className="text-5xl text-center self-center">
 					DMARC Settings
 				</h1>
+			</div> */}
+			<div className="fixed flex z-20 border-b bg-white w-full text-xl h-14 items-center pl-4">
+				Easy DMARC
 			</div>
-			<div className="flex vh-90">
-				<div className="flex w-full">
+			<div className="flex">
+				<div class="h-screen  top-0 sticky p-4 overflow-auto w-1/4">
+					<div className="grid grid-cols-1 gap-y-4 px-8 pb-4 pt-20 auto-rows-min overflow-auto">
+						{!error &&
+							isLoaded &&
+							items.map((item) => (
+								<button
+									className={`border p-2 py-6 focus:outline-none grid grid-cols-1 max-h-32 text-left ${
+										domain === item &&
+										"shadow-lg bg-gray-100"
+									}`}
+									onClick={() => setDomain(item)}
+								>
+									<span className="text-2xl font-semibold">
+										{item}
+									</span>
+									<span>DMARC</span>
+									<span>SPF</span>
+								</button>
+							))}
+					</div>
+				</div>
+
+				<div class="w-3/4 p-4 ">
+					<div className="pt-14">
+						<h2 className="text-gray-800 text-3xl">{domain}</h2>
+						{loremIpsum({
+							count: 200,
+							paragraphLowerBound: 40,
+							paragraphUpperBound: 40,
+						})}
+					</div>
+				</div>
+				{/* <div className="flex w-full">
 					<div className="grid grid-cols-4 px-4 mt-10 w-full">
 						<div className="grid grid-cols-1 gap-y-4 px-8 pb-4 auto-rows-min overflow-auto">
 							{!error &&
@@ -192,7 +227,7 @@ export default function Login({ cookies }) {
 							})}
 						</div>
 					</div>
-				</div>
+				</div> */}
 			</div>
 			{/* <div className="flex justify-center p-6">
 				<br />
