@@ -188,14 +188,45 @@ export default function Login({ cookies }) {
 					</div>
 				</div>
 
-				<div class="w-3/4 p-4 ">
+				<div className="w-3/4 p-4 ">
 					<div className="pt-14">
 						<h2 className="text-gray-800 text-3xl">{domain}</h2>
-						{loremIpsum({
-							count: 200,
-							paragraphLowerBound: 40,
-							paragraphUpperBound: 40,
-						})}
+						<hr className="my-4" />
+						<h3 className="text-2xl font-semibold">Policies</h3>
+						<p className="text-gray-600">
+							Here I put some information about what the policies
+							mean etc
+						</p>
+
+						<div className="grid grid-cols-2 gap-y-6 py-6">
+							<p>Policy</p>
+							<select>
+								<option value="none">None</option>
+								<option value="quarantine">Quarantine</option>
+								<option value="reject">Reject</option>
+							</select>
+							<p>Policy for subdomains</p>
+							<select>
+								<option value="none">None</option>
+								<option value="quarantine">Quarantine</option>
+								<option value="reject">Reject</option>
+							</select>
+							<p>SPF strictness level</p>
+							<select>
+								<option value="-all">Fail</option>
+								<option value="~all">Soft Fail</option>
+								<option value="?all">Neutral</option>
+								<option value="+all">Allow all</option>
+							</select>
+						</div>
+						<hr className="my-4" />
+						<h3 className="text-2xl font-semibold">Domains</h3>
+						<p className="text-gray-600">
+							Here I put some information about what the domains
+							mean etc
+						</p>
+
+						<div className="grid grid-cols-2 gap-y-6 py-6"></div>
 					</div>
 				</div>
 				{/* <div className="flex w-full">
